@@ -27,5 +27,15 @@ public class Movement : MonoBehaviour {
         if (Input.GetKey(KeyCode.D)) {
             rb.AddTorque(transform.up * speed);
         }
+
+        if(transform.position.x > 15) {
+            transform.position -= new Vector3(28, 0, 0);
+        }else if(transform.position.x < -15) {
+            transform.position += new Vector3(28, 0, 0);
+        } else if (transform.position.y > 7) {
+            transform.position -= new Vector3(0, 13, 0);
+        } else if (transform.position.y < -7) {
+            transform.position += new Vector3(0, 13, 0);
+        }
     }
 }
