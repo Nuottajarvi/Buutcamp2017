@@ -9,6 +9,7 @@ public class Client : MonoBehaviour {
 
     private string id;
     public bool connected = false;
+    public Rigidbody player;
 
     float time;
 
@@ -31,6 +32,7 @@ public class Client : MonoBehaviour {
     }
 
     void Update() {
+
         sendCounter = sendCounter + Time.deltaTime;
 
         string[] UDPPackets = udpReceive.GetLatestUDPPackets();
@@ -46,7 +48,6 @@ public class Client : MonoBehaviour {
                     case "GameStatus":
                         GameStatusIn(values);
                         break;
-
                 }
             }
         }
@@ -57,6 +58,10 @@ public class Client : MonoBehaviour {
                 ConnectToServerOut();
             }
             time = 0;
+        }
+
+        if (connected) {
+            UpdatePosition();
         }
     }
 
@@ -77,7 +82,7 @@ public class Client : MonoBehaviour {
     public void MoveOut(float x, float y) {
         JSONNode data = new JSONClass();
 
-        data["function"] = "move";
+        data["function"] = "Move";
         data["id"] = id;
         data["x"].AsFloat = x;
         data["y"].AsFloat = y;
@@ -89,5 +94,29 @@ public class Client : MonoBehaviour {
         if (data["status"].Value == "lost") {
             //LOSE GAME
         }
+    }
+
+    private void UpdatePosition() {
+        JSONNode data = new JSONClass();
+        data["function"] = "Update";
+        data["id"] = id;
+
+        data["force"] = new JSONClass();
+        data["force"]["x"].AsFloat = player.velocity.x;
+        data["force"]["y"].AsFloat = player.velocity.y;
+        data["force"]["z"].AsFloat = player.velocity.z;
+
+        data["torque"] = new JSONClass();
+        data["torque"]["x"].AsFloat = player.angularVelocity.x;
+        data["torque"]["y"].AsFloat = player.angularVelocity.y;
+        data["torque"]["z"].AsFloat = player.angularVelocity.z;
+
+        data["rotation"] = new JSONClass();
+        data["rotation"]["x"].AsFloat = player.rotation.x;
+        data["rotation"]["y"].AsFloat = player.rotation.y;
+        data["rotation"]["z"].AsFloat = player.rotation.z;
+        data["rotation"]["w"].AsFloat = player.rotation.w;
+
+        udpSend.Send(data);
     }
 }
