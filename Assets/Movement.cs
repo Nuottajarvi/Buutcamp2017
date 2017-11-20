@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Movement : MonoBehaviour {
+public class Movement : NetworkBehaviour {
 
     Rigidbody rb;
     public float speed;
@@ -12,20 +13,23 @@ public class Movement : MonoBehaviour {
 	}
 	
 	void Update () {
+        if (!isLocalPlayer)
+            return;
+
         if (Input.GetKey(KeyCode.W)) {
-            rb.AddForce(transform.forward * speed);
+            rb.AddForce(transform.up * speed);
         }
 
         if (Input.GetKey(KeyCode.S)) {
-            rb.AddForce(-transform.forward * speed);
+            rb.AddForce(-transform.up * speed);
         }
 
         if (Input.GetKey(KeyCode.A)) {
-            rb.AddTorque(-transform.up * speed);
+            rb.AddTorque(transform.forward * speed * 0.3f);
         }
 
         if (Input.GetKey(KeyCode.D)) {
-            rb.AddTorque(transform.up * speed);
+            rb.AddTorque(-transform.forward * speed * 0.3f);
         }
 
         if(transform.position.x > 15) {
