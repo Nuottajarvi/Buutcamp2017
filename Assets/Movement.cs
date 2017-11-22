@@ -3,33 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Movement : NetworkBehaviour {
+public class Movement : MonoBehaviour {
 
     Rigidbody rb;
-    public float speed;
+
+    public KeyCode up;
+    public KeyCode down;
+    public KeyCode left;
+    public KeyCode right;
 
 	void Start () {
         rb = GetComponent<Rigidbody>();
 	}
 	
 	void Update () {
-        if (!isLocalPlayer)
-            return;
-
-        if (Input.GetKey(KeyCode.W)) {
-            rb.AddForce(transform.up * speed);
+        if (Input.GetKey(up)) {
+            rb.AddForce(transform.up * 5);
         }
 
-        if (Input.GetKey(KeyCode.S)) {
-            rb.AddForce(-transform.up * speed);
+        if (Input.GetKey(down)) {
+            rb.AddForce(transform.up * -5);
         }
 
-        if (Input.GetKey(KeyCode.A)) {
-            rb.AddTorque(transform.forward * speed * 0.3f);
+        if (Input.GetKey(left)) {
+            rb.AddTorque(transform.forward * 2f);
         }
 
-        if (Input.GetKey(KeyCode.D)) {
-            rb.AddTorque(-transform.forward * speed * 0.3f);
+        if (Input.GetKey(right)) {
+            rb.AddTorque(-transform.forward * 2f);
         }
 
         if(transform.position.x > 15) {

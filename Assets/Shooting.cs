@@ -5,17 +5,17 @@ using UnityEngine;
 public class Shooting : MonoBehaviour {
 
     public GameObject laser;
-    public float max_cooldown;
     float cooldown;
+    public KeyCode shoot;
 
 	void Start () {
-        cooldown = max_cooldown;
+        cooldown = 1;
 	}
 	
 	void Update () {
-        if (Input.GetKey(KeyCode.Space) && cooldown < 0) {
+        if (Input.GetKey(shoot) && cooldown < 0) {
             laser.SetActive(true);
-            cooldown = max_cooldown;
+            cooldown = 1;
         } else {
             laser.SetActive(false);
             cooldown -= Time.deltaTime;
