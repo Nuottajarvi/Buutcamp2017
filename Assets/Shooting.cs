@@ -5,8 +5,9 @@ using UnityEngine;
 public class Shooting : MonoBehaviour {
 
     public GameObject laser;
-    float cooldown;
+    public double cooldown;
     public KeyCode shoot;
+    bool laserActive;
 
 	void Start () {
         cooldown = 1;
@@ -15,10 +16,10 @@ public class Shooting : MonoBehaviour {
 	void Update () {
         if (Input.GetKey(shoot) && cooldown < 0) {
             laser.SetActive(true);
-            cooldown = 1;
-        } else {
+            cooldown = 1.05;
+        } else if(cooldown < 1){
             laser.SetActive(false);
-            cooldown -= Time.deltaTime;
         }
-	}
+        cooldown -= Time.deltaTime;
+    }
 }

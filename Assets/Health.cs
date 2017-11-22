@@ -5,9 +5,12 @@ using UnityEngine.Networking;
 
 public class Health : MonoBehaviour {
 
-    int amount;
+    public int amount;
 
 	public void TakeDamage() {          
         amount -= 1;
+        if (amount == 0) {
+            gameObject.SetActive(false);
+        }
     }
 }

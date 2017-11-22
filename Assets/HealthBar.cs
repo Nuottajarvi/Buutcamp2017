@@ -6,24 +6,19 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour {
 
     public Image[] hearts;
-    public int health;
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
+    public GameObject player;
+    
 	// Update is called once per frame
    	void Update () {
 		for(int i = 0; i < hearts.Length; i++)
         {
-            if(i >= health)
+            if(i >= player.GetComponent<Health>().amount || player == null)
             {
-                hearts[i].CrossFadeAlpha(0, 0.25f, false);
+                hearts[i].enabled = false;
             }
             else
             {
-                hearts[i].CrossFadeAlpha(1, 0.25f, false);
+                hearts[i].enabled = true;
             }
         }
 	}

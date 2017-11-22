@@ -33,10 +33,10 @@ public class Movement : MonoBehaviour {
             rb.AddTorque(-transform.forward * 2f);
         }
 
-        if(transform.position.x > 15) {
-            transform.position -= new Vector3(28, 0, 0);
-        }else if(transform.position.x < -15) {
-            transform.position += new Vector3(28, 0, 0);
+        if(transform.position.x > 12) {
+            transform.position -= new Vector3(23, 0, 0);
+        }else if(transform.position.x < -12) {
+            transform.position += new Vector3(23, 0, 0);
         } else if (transform.position.y > 7) {
             transform.position -= new Vector3(0, 13, 0);
         } else if (transform.position.y < -7) {
